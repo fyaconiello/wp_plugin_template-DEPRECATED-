@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: WP Plugin Template
-Plugin URI: http://fyaconiello.github.com/wp_plugin_template
+Plugin URI: https://github.com/fyaconiello/wp_plugin_template
 Description: A simple wordpress plugin template
 Version: 1.0
 Author: Francis Yaconiello
