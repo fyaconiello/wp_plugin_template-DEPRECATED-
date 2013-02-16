@@ -1,10 +1,10 @@
 <?php
-if(!class_exists('PostTypeTemplate'))
+if(!class_exists('Post_Type_Template'))
 {
 	/**
 	 * A PostTypeTemplate class that provides 3 additional meta fields
 	 */
-	class PostTypeTemplate
+	class Post_Type_Template
 	{
 		const POST_TYPE	= "post-type-template";
 		private $_meta	= array(
@@ -112,5 +112,5 @@ if(!class_exists('PostTypeTemplate'))
 			include(sprintf("%s/../templates/%s_metabox.php", dirname(__FILE__), self::POST_TYPE));			
 		} // END public function add_inner_meta_boxes($post)
 
-	} // END class PostTypeTemplate
-} // END if(!class_exists('PostTypeTemplate'))
+	} // END class Post_Type_Template
+} // END if(!class_exists('Post_Type_Template'))

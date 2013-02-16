@@ -34,57 +34,15 @@ if(!class_exists('WP_Plugin_Template'))
 		 */
 		public function __construct()
 		{
-			// register actions
-            add_action('admin_init', array(&$this, 'admin_init'));
-        	add_action('admin_menu', array(&$this, 'add_menu'));
+        	// Initialize Settings
+            require_once(sprintf("%s/settings.php", dirname(__FILE__)));
+            $WP_Plugin_Template_Settings = new WP_Plugin_Template_Settings();
         	
         	// Register custom post types
             require_once(sprintf("%s/post-types/post_type_template.php", dirname(__FILE__)));
-            $PostTypeTemplate = new PostTypeTemplate();
+            $Post_Type_Template = new Post_Type_Template();
 		} // END public function __construct
-	
-        /**
-         * hook into WP's admin_init action hook
-         */
-        public function admin_init()
-        {
-        	// Set up the settings for this plugin
-        	$this->init_settings();
-        	// Possibly do additional admin_init tasks
-        } // END public static function activate
-
-        /**
-         * Initialize some custom settings
-         */		
-        public function init_settings()
-        {
-        	// register the settings for this plugin
-        	register_setting('wp_plugin_template-group', 'setting_a');
-        	register_setting('wp_plugin_template-group', 'setting_b');
-        } // END public function init_custom_settings()
-        
-        /**
-         * add a menu
-         */		
-        public function add_menu()
-        {
-        	add_options_page('WP Plugin Template Settings', 'WP Plugin Template', 'manage_options', 'wp_plugin_template', array(&$this, 'plugin_settings_page'));
-        } // END public function add_menu()
-    
-        /**
-         * Menu Callback
-         */		
-        public function plugin_settings_page()
-        {
-        	if(!current_user_can('manage_options'))
-        	{
-        		wp_die(__('You do not have sufficient permissions to access this page.'));
-        	}
-	
-        	// Render the settings template
-        	include(sprintf("%s/templates/settings.php", dirname(__FILE__)));
-        } // END public function plugin_settings_page()
-    
+	    
 		/**
 		 * Activate the plugin
 		 */
