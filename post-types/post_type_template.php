@@ -66,7 +66,7 @@ if(!class_exists('Post_Type_Template'))
                 return;
             }
             
-    		if($_POST['post_type'] == self::POST_TYPE && current_user_can('edit_post', $post_id))
+    		if(isset($_POST['post_type']) && $_POST['post_type'] == self::POST_TYPE && current_user_can('edit_post', $post_id))
     		{
     			foreach($this->_meta as $field_name)
     			{
