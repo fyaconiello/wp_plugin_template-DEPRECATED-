@@ -12,7 +12,7 @@ License: GPL2
 Copyright 2012  Francis Yaconiello  (email : francis@yaconiello.com)
 
 This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License, version 2, as 
+it under the terms of the GNU General Public License, version 2, as
 published by the Free Software Foundation.
 
 This program is distributed in the hope that it will be useful,
@@ -34,15 +34,18 @@ if(!class_exists('WP_Plugin_Template'))
 		 */
 		public function __construct()
 		{
-        	// Initialize Settings
-            require_once(sprintf("%s/settings.php", dirname(__FILE__)));
-            $WP_Plugin_Template_Settings = new WP_Plugin_Template_Settings();
-        	
-        	// Register custom post types
-            require_once(sprintf("%s/post-types/post_type_template.php", dirname(__FILE__)));
-            $Post_Type_Template = new Post_Type_Template();
+			// Initialize Settings
+			require_once(sprintf("%s/settings.php", dirname(__FILE__)));
+			$WP_Plugin_Template_Settings = new WP_Plugin_Template_Settings();
+
+			// Register custom post types
+			require_once(sprintf("%s/post-types/post_type_template.php", dirname(__FILE__)));
+			$Post_Type_Template = new Post_Type_Template();
+
+			$plugin = plugin_basename(__FILE__);
+			add_filter("plugin_action_links_$plugin", array( $this, 'plugin_settings_link' ));
 		} // END public function __construct
-	    
+
 		/**
 		 * Activate the plugin
 		 */
@@ -50,14 +53,24 @@ if(!class_exists('WP_Plugin_Template'))
 		{
 			// Do nothing
 		} // END public static function activate
-	
+
 		/**
 		 * Deactivate the plugin
-		 */		
+		 */
 		public static function deactivate()
 		{
 			// Do nothing
 		} // END public static function deactivate
+
+		// Add the settings link to the plugins page
+		function plugin_settings_link($links)
+		{
+			$settings_link = '<a href="options-general.php?page=wp_plugin_template">Settings</a>';
+			array_unshift($links, $settings_link);
+			return $links;
+		}
+
+
 	} // END class WP_Plugin_Template
 } // END if(!class_exists('WP_Plugin_Template'))
 
@@ -69,19 +82,5 @@ if(class_exists('WP_Plugin_Template'))
 
 	// instantiate the plugin class
 	$wp_plugin_template = new WP_Plugin_Template();
-	
-    // Add a link to the settings page onto the plugin page
-    if(isset($wp_plugin_template))
-    {
-        // Add the settings link to the plugins page
-        function plugin_settings_link($links)
-        { 
-            $settings_link = '<a href="options-general.php?page=wp_plugin_template">Settings</a>'; 
-            array_unshift($links, $settings_link); 
-            return $links; 
-        }
 
-        $plugin = plugin_basename(__FILE__); 
-        add_filter("plugin_action_links_$plugin", 'plugin_settings_link');
-    }
 }
